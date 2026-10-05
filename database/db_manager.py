@@ -2,9 +2,10 @@ import pandas as pd
 from config import settings
 
 class CSVManager:
-    def __init__(self, datos, errores):
+    def __init__(self, datos, errores, prefijo):
         self.datos = datos
         self.errores = errores
+        self.prefijo = prefijo
 
     def procesar_y_guardar(self):
         """Limpia los datos y los exporta a archivos CSV."""
@@ -34,12 +35,14 @@ class CSVManager:
         print(f"Páginas/operaciones con error: {len(df_errores)}")
 
         # Exportar datos a CSV
-        df.to_csv("books.csv", index=False, encoding="utf-8")
-        print("\n✓ books.csv creado.")
+        archivo_datos = f"books_{self.prefijo}.csv" # agregar prefijo si es necesario
+        df.to_csv(archivo_datos, index=False, encoding="utf-8")
+        print(f"\n {archivo_datos} creado.")
 
         # Exportar errores a CSV
         if not df_errores.empty:
-            df_errores.to_csv("errores.csv", index=False, encoding="utf-8")
-            print("✓ errores.csv creado.")
+            archivo_errores = f"errores_{self.prefijo}.csv"
+            df_errores.to_csv(archivo_errores, index=False, encoding="utf-8")
+            print(f" {archivo_errores} creado.")
         else:
-            print("✓ No hubo errores.")
+            print(" No hubo errores.")

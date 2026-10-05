@@ -1,6 +1,7 @@
 from ui.menu import mostrar_menu
 from sources.books_selenium import SeleniumScraper
 from database.db_manager import CSVManager
+from sources.books_bs4 import BS4Scraper
 
 def main():
     opcion = mostrar_menu()
@@ -8,9 +9,11 @@ def main():
     if opcion == '1':
         print("\nIniciando extracción con Selenium...")
         scraper = SeleniumScraper()
+        prefijo = "selenium"
     elif opcion == '2':
-        print("\nVersión de BeautifulSoup aún no implementada.")
-        return
+        print("\nIniciando extracción con BeautifulSoup...")
+        scraper = BS4Scraper()
+        prefijo = "bs4"
     else:
         print("\nSaliendo del programa...")
         return
@@ -24,7 +27,7 @@ def main():
         
         # 3. Procesar y guardar resultados en CSV
         if scraper.datos or scraper.errores:
-            manager = CSVManager(scraper.datos, scraper.errores)
+            manager = CSVManager(scraper.datos, scraper.errores, prefijo)
             manager.procesar_y_guardar()
         else:
             print("\nNo se extrajeron datos para guardar.")

@@ -2,7 +2,7 @@
 BASE_URL = "https://books.toscrape.com"
 
 # Configuraciones de comportamiento
-SELENIUM_TIMEOUT = 10
+SELENIUM_TIMEOUT = 20
 MAX_RETRIES = 3
 RETRY_DELAY = 2
 
